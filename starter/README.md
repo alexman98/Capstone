@@ -52,15 +52,19 @@ Auth0 Dashboard → Applications → APIs → Casting → Test tab
 Generate tokens for each role.
 
 5. 
-Create setup.sh (NOT committed):
+Create a `setup.sh` file in your project root directory to store **local** environment variables. **DO NOT commit this file to Git.**
+
+```bash
 export AUTH0_DOMAIN="<YOUR_TENANT>.us.auth0.com"
 export API_AUDIENCE="casting"
 export ALGORITHMS="RS256"
 export DATABASE_URL="postgresql://localhost:5432/casting"
+
 export ASSISTANT_TOKEN="<PASTE_JWT>"
 export DIRECTOR_TOKEN="<PASTE_JWT>"
 export PRODUCER_TOKEN="<PASTE_JWT>"
-echo "Env vars loaded."
+
+echo "Environment variables loaded."
 
 Then load with:
 source setup.sh
