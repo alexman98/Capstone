@@ -22,23 +22,17 @@ This project exhibits:
 The API requires a valid JWT in the `Authorization` header.  
 See **Authentication Setup** below to obtain a token.
 
-## Project Dependencies
+## Local Development Setup
+git clone https://github.com/<your-username>/<your-repo>.git
+cd your-repo
 
-- All pinned in **requirements.txt**
-
-## 💻 Local Development
-
-bash
-# clone + enter repo
-git clone https://github.com/<your-user>/<repo>.git
-cd repo
-
-# create & activate venv
+## create & activate venv
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 
-# install dependencies
+## install dependencies
 pip install -r requirements.txt
+
 
 ## Authentication Setup
 
@@ -46,19 +40,27 @@ pip install -r requirements.txt
 2. Use casting as the API Audience
 3. Define roles:
 
-Role	Permissions
-Casting Assistant	get:actors, get:movies
-Casting Director	All above + post:actors, delete:actors, patch:actors, patch:movies
-Executive Producer	All above + post:movies, delete:movies
+| **Role**             | **Permissions**                                                                 |
+|----------------------|----------------------------------------------------------------------------------|
+| Casting Assistant     | `get:actors`, `get:movies`                                                      |
+| Casting Director      | All above + `post:actors`, `delete:actors`, `patch:actors`, `patch:movies`     |
+| Executive Producer    | All above + `post:movies`, `delete:movies`    
 
-4. Create setup.sh (DO NOT COMMIT):
+4. Get tokens
 
-export AUTH0_DOMAIN='your-tenant.us.auth0.com'
-export API_AUDIENCE='casting'
-export DATABASE_URL='postgresql://localhost:5432/casting'
-export ASSISTANT_TOKEN='<PASTE_TOKEN>'
-export DIRECTOR_TOKEN='<PASTE_TOKEN>'
-export PRODUCER_TOKEN='<PASTE_TOKEN>'
+Auth0 Dashboard → Applications → APIs → Casting → Test tab
+Generate tokens for each role.
+
+5. 
+Create setup.sh (NOT committed):
+export AUTH0_DOMAIN="<YOUR_TENANT>.us.auth0.com"
+export API_AUDIENCE="casting"
+export ALGORITHMS="RS256"
+export DATABASE_URL="postgresql://localhost:5432/casting"
+export ASSISTANT_TOKEN="<PASTE_JWT>"
+export DIRECTOR_TOKEN="<PASTE_JWT>"
+export PRODUCER_TOKEN="<PASTE_JWT>"
+echo "Env vars loaded."
 
 Then load with:
 source setup.sh
@@ -78,23 +80,31 @@ Visit: http://localhost:8080
  * Start command: gunicorn 'main:create_app()'
  * Add environment variables from setup.sh
 
+AUTH0_DOMAIN="ADD_YOUR_DOMAIN"
+API_AUDIENCE=casting
+ALGORITHMS=RS256
+DATABASE_URL="ADD_DB_URL"
+
+Manual deploy (or auto-deploy on push).
+
  ## API Reference
 
- Headers:
- Authorization: Bearer <JWT>
+Headers:
+Authorization: Bearer <JWT>
 Content-Type: application/json
 
 Endpoints:
 
-Method	Endpoint	Permission
-GET	/actors	get:actors
-GET	/movies	get:movies
-POST	/actors	post:actors
-POST	/movies	post:movies
-PATCH	/actors/<id>	patch:actors
-PATCH	/movies/<id>	patch:movies
-DELETE	/actors/<id>	delete:actors
-DELETE	/movies/<id>	delete:movies
+| Method | Endpoint         | Required Permission   |
+|--------|------------------|------------------------|
+| GET    | `/actors`        | `get:actors`          |
+| GET    | `/movies`        | `get:movies`          |
+| POST   | `/actors`        | `post:actors`         |
+| POST   | `/movies`        | `post:movies`         |
+| PATCH  | `/actors/<id>`   | `patch:actors`        |
+| PATCH  | `/movies/<id>`   | `patch:movies`        |
+| DELETE | `/actors/<id>`   | `delete:actors`       |
+| DELETE | `/movies/<id>`   | `delete:movies`       |
 
 ## Error Handling:
 
