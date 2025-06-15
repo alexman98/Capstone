@@ -1,7 +1,7 @@
 export AUTH0_DOMAIN="dev-5lzfargwj11n1quu.us.auth0.com"
 export API_AUDIENCE="casting"
 export ALGORITHMS="RS256"
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/casting"
+export DATABASE_URL="postgresql://casting_agency_db_user:aNIyNEfXSOQAeszwQ3bHqg61qvHSIDNS@dpg-d17dfoh5pdvs7388iac0-a/casting_agency_db"
 export assistant_token="ADD_YOUR_ASSISTANT_TOKEN_HERE"
 export director_token="ADD_YOUR_DIRECTOR_TOKEN_HERE"
 export producer_token="ADD_YOUR_PRODUCER_TOKEN_HERE"
