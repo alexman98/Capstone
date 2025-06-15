@@ -65,6 +65,7 @@ export DIRECTOR_TOKEN="<PASTE_JWT>"
 export PRODUCER_TOKEN="<PASTE_JWT>"
 
 echo "Environment variables loaded."
+```
 
 Then load with:
 source setup.sh
